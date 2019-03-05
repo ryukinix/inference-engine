@@ -42,10 +42,11 @@
 
 (defun parse-string (string)
   "Translate string to a list expression"
-  (if (and (str:starts-with-p "(" string)
-           (str:ends-with-p ")" string))
-      (read-from-string string)
-      (read-from-string (str:concat "(" string ")"))))
+  (unless (str:starts-with-p "#." (str:trim string))
+      (if (and (str:starts-with-p "(" string)
+            (str:ends-with-p ")" string))
+       (read-from-string string)
+       (read-from-string (str:concat "(" string ")")))))
 
 (defun truth-table (exp)
   (with-output-to-string (s)
